@@ -25,6 +25,11 @@ public class InstructionService {
      */
     private final RestTemplate restTemplate;
 
+    /**
+     * Service constructor; the parameters are autowired
+     * @param restTemplate the template that consumes the 3rd-party API
+     * @param url the url of the 3rd-party API
+     */
     @Autowired
     public InstructionService(RestTemplate restTemplate, final @Value("${api_url}") String url) {
         this.restTemplate = restTemplate;

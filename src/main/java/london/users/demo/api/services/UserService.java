@@ -17,6 +17,9 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+/**
+ * This class implements the "business logic"  (related to the users)
+ */
 @Service
 public class UserService {
 
@@ -61,6 +64,11 @@ public class UserService {
      */
     private final RestTemplate restTemplate;
 
+    /**
+     * Service constructor; the parameters are autowired
+     * @param restTemplate the template that consumes the 3rd-party API
+     * @param url the url of the 3rd-party API
+     */
     @Autowired
     public UserService(RestTemplate restTemplate, final @Value("${api_url}") String url) {
         this.restTemplate = restTemplate;
@@ -69,6 +77,7 @@ public class UserService {
 
     /**
      * Sends a GET request to /users/{id} endpoint to retrieve the user with the specified id
+     * @param id the id of the user
      * @return the user retrieved by the 3rd-party API
      */
     public User getUser(Integer id) {
@@ -112,6 +121,7 @@ public class UserService {
     /**
      * Sends a GET request to /city/{city}/users endpoint to retrieve the all the users that live in the specified
      * city provided by the API
+     * @param cityName the name of the city
      * @return all the users retrieved by the 3rd-party API
      */
     public List<User> getUsersByCity(String cityName) {

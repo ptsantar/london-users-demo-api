@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * This controller handles the requests related to the {@link User} class
+ */
 @RestController
 @RequestMapping("london-users/api/v1/users")
 public class UserController {
@@ -19,6 +22,10 @@ public class UserController {
      */
     private final UserService service;
 
+    /**
+     * Controller constructor; it initializes the user service. Parameter is autowired
+     * @param userService service that implements the business logic
+     */
     @Autowired
     public UserController(UserService userService){
         service = userService;
@@ -45,6 +52,7 @@ public class UserController {
 
     /**
      * This request retrieves all the users from the API that are registered in the specified city
+     * @param cityName the name of the city
      * @return a list containing the users retrieved by the API
      */
     @GetMapping(value = "/city/{cityName}")
@@ -55,6 +63,8 @@ public class UserController {
     /**
      * This request finds all the users that live/are registered around the specified city. Optionally, the user
      * can specify the radius (default value: 50).
+     * @param cityName the name of the city
+     * @param radius optional parameter, the search radius in miles
      * @return a list containing the users retrieved by the API
      */
     @GetMapping(value = {"/city-radius/{cityName}"})

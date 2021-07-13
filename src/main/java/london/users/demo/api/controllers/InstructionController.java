@@ -6,6 +6,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * This controller handles the request (only 1 for now) regarding the assignment instructions
+ */
 @RestController
 @RequestMapping("london-users/api/v1/instructions")
 public class InstructionController {

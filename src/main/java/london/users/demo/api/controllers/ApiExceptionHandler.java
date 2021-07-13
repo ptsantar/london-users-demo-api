@@ -7,6 +7,9 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+/**
+ * This class handles the application behavior when an {@link ApiException} is thrown.
+ */
 @ControllerAdvice
 public class ApiExceptionHandler {
 
