@@ -41,7 +41,7 @@ public class InstructionService {
                     restTemplate.exchange(apiUrl+"instructions", HttpMethod.GET, null, String.class);
             return responseEntity.getBody();
         } catch(HttpStatusCodeException e) {
-            throw new ApiException("Endpoint /instructions");
+            throw new ApiException(e.getMessage(), "Endpoint /instructions", e.getStatusCode());
         }
     }
 }
