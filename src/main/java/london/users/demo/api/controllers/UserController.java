@@ -70,7 +70,7 @@ public class UserController {
     @GetMapping(value = {"/city-radius/{cityName}"})
     public List<User> getUsersByCityRadiusPar(
             @PathVariable String cityName,
-            @RequestParam Optional<Integer> radius){
+            @RequestParam(required = false) Optional<Integer> radius){
         // if a negative radius is provided throw an exception
         if(radius.isPresent() && radius.get()<0){
             throw new ApiException("Negative Radius provided. Value: "+ radius.get(), "Endpoint /city-radius/{cityName}", HttpStatus.BAD_REQUEST);
