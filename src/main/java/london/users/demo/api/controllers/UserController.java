@@ -39,4 +39,13 @@ public class UserController {
     public List<User> getUsers(){
         return service.getUsers();
     }
+
+    /**
+     * This request retrieves all the users from the API that are registered in the specified city
+     * @return a list containing the users retrieved by the API
+     */
+    @GetMapping(value = "/city/{cityName}")
+    public List<User> getUsersByCity(@PathVariable String cityName){
+        return service.getUsersByCity(cityName);
+    }
 }

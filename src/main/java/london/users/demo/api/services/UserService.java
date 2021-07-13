@@ -14,6 +14,8 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.client.RestTemplate;
 
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -60,8 +62,11 @@ public class UserService {
     public List<User> getUsers() {
         try {
             // sent the GET request
-            ResponseEntity<User[]> responseEntity =
-                    restTemplate.exchange(apiUrl+"users", HttpMethod.GET, null, User[].class);
+            ResponseEntity<User[]> responseEntity = restTemplate.exchange(
+                    apiUrl+"users",
+                    HttpMethod.GET,
+                    null,
+                    User[].class);
             // check if the body is not null
             Optional<User[]> body = Optional.ofNullable(responseEntity.getBody());
             // if not parse the body and return the user list
@@ -72,6 +77,33 @@ public class UserService {
             throw new ApiException("Body was null", "endpoint: user/{id}", HttpStatus.INTERNAL_SERVER_ERROR);
         } catch(HttpStatusCodeException e) {
             throw new ApiException(e.getMessage(), "Endpoint /users", e.getStatusCode());
+        }
+    }
+
+    /**
+     * Sends a GET request to /city/{city}/users endpoint to retrieve the all the users that live in the specified
+     * city provided by the API
+     * @return all the users retrieved by the 3rd-party API
+     */
+    public List<User> getUsersByCity(String cityName) {
+        try {
+            // sent the GET request
+            ResponseEntity<User[]> responseEntity =
+                    restTemplate.exchange(
+                            apiUrl+"/city/"+ URLEncoder.encode(cityName, StandardCharsets.UTF_8) + "/users",
+                            HttpMethod.GET,
+                            null,
+                            User[].class);
+            // check if the body is not null
+            Optional<User[]> body = Optional.ofNullable(responseEntity.getBody());
+            // if not parse the body and return the user list
+            if(body.isPresent()){
+                return Arrays.stream(responseEntity.getBody()).collect(Collectors.toList());
+            }
+            // else throw an exception
+            throw new ApiException("Body was null", "endpoint: /city/{city}/users", HttpStatus.INTERNAL_SERVER_ERROR);
+        } catch(HttpStatusCodeException e) {
+            throw new ApiException(e.getMessage(), "Endpoint /city/{city}/users", e.getStatusCode());
         }
     }
 }
