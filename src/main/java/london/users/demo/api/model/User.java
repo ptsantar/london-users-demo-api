@@ -2,6 +2,7 @@ package london.users.demo.api.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.AllArgsConstructor;
 import lombok.Value;
 
 /**
@@ -10,6 +11,7 @@ import lombok.Value;
  * to the json responses.
  */
 @Value
+@AllArgsConstructor
 public class User {
     @JsonProperty("id")
     @ApiModelProperty(notes = "The user's id")
@@ -38,4 +40,5 @@ public class User {
     @JsonProperty("longitude")
     @ApiModelProperty(notes = "The user's known longitude")
     double longitude;
+
 }
