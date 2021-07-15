@@ -1,5 +1,8 @@
 package london.users.demo.api.controllers;
 
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import london.users.demo.api.model.User;
 import london.users.demo.api.services.ApiException;
 import london.users.demo.api.services.UserService;
@@ -36,15 +39,27 @@ public class UserController {
      * @param id the id of the user to retrieve
      * @return an instance of User
      */
+    @ApiOperation(value = "This request retrieves the user with the specified id from the API",response = Iterable.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successfully retrieved list"),
+            @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
+        }
+    )
     @GetMapping(value = "{id}", produces = { "application/json" })
     public User getUser(@PathVariable Integer id){
         return service.getUser(id);
     }
 
     /**
-     * This request retrieves all the users with the specified id from the API
+     * This request retrieves all the users available from the API
      * @return a list containing all the users retrieved by the API
      */
+    @ApiOperation(value = "This request retrieves all the users available from the API",response = Iterable.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successfully retrieved list"),
+            @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
+        }
+    )
     @GetMapping()
     public List<User> getUsers(){
         return service.getUsers();
@@ -55,6 +70,13 @@ public class UserController {
      * @param cityName the name of the city
      * @return a list containing the users retrieved by the API
      */
+    @ApiOperation(value = "This request retrieves all the users from the API that are registered in the specified city",
+            response = Iterable.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successfully retrieved list"),
+            @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
+        }
+    )
     @GetMapping(value = "/city/{cityName}")
     public List<User> getUsersByCity(@PathVariable String cityName){
         return service.getUsersByCity(cityName);
@@ -67,6 +89,15 @@ public class UserController {
      * @param radius optional parameter, the search radius in miles
      * @return a list containing the users retrieved by the API
      */
+    @ApiOperation(value = "This request finds all the users that live/are registered around the specified city. " +
+            "Optionally, the user can specify the radius (default value: 50)",
+            response = Iterable.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successfully retrieved list"),
+            @ApiResponse(code = 400, message = "Negative radius value provided."),
+            @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
+        }
+    )
     @GetMapping(value = {"/city-radius/{cityName}"})
     public List<User> getUsersByCityRadiusPar(
             @PathVariable String cityName,
